@@ -1,0 +1,43 @@
+# Build output
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+
+# Visual Studio files
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+
+# IDE settings
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.iml
+
+# Local data files
+data/docs/*
+data/index/*
+!data/docs/.gitkeep
+!data/index/.gitkeep
+
+# Temporary files
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
