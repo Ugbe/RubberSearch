@@ -1,8 +1,7 @@
+using RubberSearch.Core.Models;
+using RubberSearch.Core.Repositories;
+
 namespace RubberSearch.Infrastructure.Interfaces
 {
-    public interface IDocumentRepository
-    {
-        Task SaveDocumentAsync(Document document);
-        Task<Document?> GetDocumentAsync(string docId);
-    }
+    public interface IDocumentRepository : RubberSearch.Core.Repositories.IDocumentRepository { }
 }

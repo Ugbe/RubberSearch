@@ -1,6 +1,6 @@
 using System.Text.Json;
 using RubberSearch.Core.Models;
-using RubberSearch.Infrastructure.Interfaces;
+using RubberSearch.Core.Repositories;
 
 namespace RubberSearch.Infrastructure
 {

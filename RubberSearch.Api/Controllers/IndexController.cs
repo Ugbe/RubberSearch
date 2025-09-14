@@ -21,7 +21,7 @@ namespace RubberSearch.Api.Controllers
             {
                 return BadRequest("Invalid document data.");
             }
-            var document = new DocumentDto
+            var document = new Document
             {
                 DocId = doc.DocId,
                 Title = doc.Title,

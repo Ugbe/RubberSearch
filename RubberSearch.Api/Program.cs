@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using RubberSearch.Core.Services;
+using RubberSearch.Core.Repositories;
 using RubberSearch.Infrastructure;
-using RubberSearch.Infrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
