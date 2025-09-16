@@ -3,7 +3,12 @@ namespace RubberSearch.Core.Repositories
 {
     public interface IInvertedIndexRepository
     {
-        Task SaveIndexEntriesAsync(IEnumerable<IndexEntry> entries);
-        Task<Dictionary<string, IndexEntry>> GetIndexEntriesAsync();
+        /// <summary>
+        /// Gets the path to the index file for the specified tenant.
+        /// </summary>
+        /// <param name="tenantId">The tenant identifier.</param>
+        string GetIndexFile(string tenantId);
+        Task SaveIndexEntriesAsync(IEnumerable<IndexEntry> entries, string tenantId);
+        Task<Dictionary<string, IndexEntry>> GetIndexEntriesAsync(string tenantId);
     }
 }

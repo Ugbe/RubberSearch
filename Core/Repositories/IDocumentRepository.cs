@@ -3,7 +3,7 @@ namespace RubberSearch.Core.Repositories
 {
     public interface IDocumentRepository
     {
-        Task SaveDocumentAsync(Document document);
-        Task<Document?> GetDocumentAsync(string docId);
+        Task SaveDocumentAsync(Document document, string tenantId);
+        Task<Document?> GetDocumentAsync(string docId, string tenantId);
     }
 }

@@ -1,5 +1,4 @@
 using RubberSearch.Core.Models;
-using System.Threading.Tasks;
 
 namespace RubberSearch.Core.Services
 {
@@ -11,11 +10,11 @@ namespace RubberSearch.Core.Services
         /// <summary>
         /// Add or update a document in the index and persist it to storage.
         /// </summary>
-        Task AddDocumentAsync(Document document);
+        Task AddDocumentAsync(Document document, string tenantId);
 
         /// <summary>
         /// Retrieve a document by id from storage.
         /// </summary>
-        Task<Document?> GetDocumentAsync(string docId);
+        Task<Document?> GetDocumentAsync(string docId, string tenantId);
     }
 }

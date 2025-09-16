@@ -26,17 +26,17 @@ namespace RubberSearch.Core.Services
     /// <summary>
     /// Persist the document and update the inverted index with postings (positions, frequency).
     /// </summary>
-    public async Task AddDocumentAsync(Document document)
+    public async Task AddDocumentAsync(Document document, string tenantId)
         {
             // 1. Save the document
-            await _documentRepository.SaveDocumentAsync(document);
+            await _documentRepository.SaveDocumentAsync(document, tenantId);
 
             // 2. Extract tokens with positions from title and content
             var titleTokens = _tokenizer.TokenizeWithPositions(document.Title);
             var contentTokens = _tokenizer.TokenizeWithPositions(document.Content);
 
             // 3. Get existing index
-            var indexEntries = await _indexRepository.GetIndexEntriesAsync();
+            var indexEntries = await _indexRepository.GetIndexEntriesAsync(tenantId);
 
             // 4. Update index entries for this document
             var allTokens = new HashSet<string>(titleTokens.Keys.Union(contentTokens.Keys));
@@ -73,15 +73,15 @@ namespace RubberSearch.Core.Services
             }
 
             // 5. Save updated index
-            await _indexRepository.SaveIndexEntriesAsync(indexEntries.Values);
+            await _indexRepository.SaveIndexEntriesAsync(indexEntries.Values, tenantId);
         }
 
     /// <summary>
     /// Load a document by id from the document repository.
     /// </summary>
-    public async Task<Document?> GetDocumentAsync(string docId)
+    public async Task<Document?> GetDocumentAsync(string docId, string tenantId)
         {
-            return await _documentRepository.GetDocumentAsync(docId);
+            return await _documentRepository.GetDocumentAsync(docId, tenantId);
         }
     }
 }

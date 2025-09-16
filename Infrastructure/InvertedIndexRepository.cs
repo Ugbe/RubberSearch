@@ -6,32 +6,39 @@ namespace RubberSearch.Infrastructure
 {
     public class InvertedIndexRepository : IInvertedIndexRepository
     {
-        private readonly string _indexPath;
-        private readonly string _indexFile;
+        private readonly string _dataPath;
 
         public InvertedIndexRepository(string basePath)
         {
-            _indexPath = Path.Combine(basePath, "index");
-            Directory.CreateDirectory(_indexPath);
-            _indexFile = Path.Combine(_indexPath, "index.json");
+            _dataPath = basePath;
+            Directory.CreateDirectory(_dataPath);
         }
 
-        public async Task SaveIndexEntriesAsync(IEnumerable<IndexEntry> entries)
+        public string GetIndexFile(string tenantId)
         {
-            var json = JsonSerializer.Serialize(entries, new JsonSerializerOptions 
-            { 
-                WriteIndented = true 
+            var indexDir = Path.Combine(_dataPath, tenantId, "index");
+            Directory.CreateDirectory(indexDir);
+            return Path.Combine(indexDir, "index.json");
+        }
+
+        public async Task SaveIndexEntriesAsync(IEnumerable<IndexEntry> entries, string tenantId)
+        {
+            var file = GetIndexFile(tenantId);
+            var json = JsonSerializer.Serialize(entries, new JsonSerializerOptions
+            {
+                WriteIndented = true
             });
-            await File.WriteAllTextAsync(_indexFile, json);
+            var tmp = file + ".tmp";
+            await File.WriteAllTextAsync(tmp, json);
+            File.Move(tmp, file, overwrite: true);
         }
 
-        public async Task<Dictionary<string, IndexEntry>> GetIndexEntriesAsync()
+        public async Task<Dictionary<string, IndexEntry>> GetIndexEntriesAsync(string tenantId)
         {
-            if (!File.Exists(_indexFile))
-                return new Dictionary<string, IndexEntry>();
-
-            var json = await File.ReadAllTextAsync(_indexFile);
-            var entries = JsonSerializer.Deserialize<List<IndexEntry>>(json) ?? new();
+            var file = GetIndexFile(tenantId);
+            if (!File.Exists(file)) return new Dictionary<string, IndexEntry>();
+            var json = await File.ReadAllTextAsync(file);
+            var entries = JsonSerializer.Deserialize<List<IndexEntry>>(json) ?? new List<IndexEntry>();
             return entries.ToDictionary(e => e.Token);
         }
     }

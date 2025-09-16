@@ -1,6 +1,7 @@
 using RubberSearch.Core.Services;
 using RubberSearch.Core.Repositories;
 using RubberSearch.Infrastructure;
+using RubberSearch.Core.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ var dataPath = Path.Combine(builder.Environment.ContentRootPath, "..", "data");
 builder.Services.AddSingleton<IDocumentRepository>(new DocumentRepository(dataPath));
 builder.Services.AddSingleton<IInvertedIndexRepository>(new InvertedIndexRepository(dataPath));
 builder.Services.AddSingleton<IIndexingService, IndexingService>();
+builder.Services.AddSingleton(new ApiKeyMapper(dataPath));
 
 var app = builder.Build();
 

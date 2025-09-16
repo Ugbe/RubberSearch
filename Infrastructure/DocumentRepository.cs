@@ -6,17 +6,19 @@ namespace RubberSearch.Infrastructure
 {
     public class DocumentRepository : IDocumentRepository
     {
-        private readonly string _basePath;
+        private readonly string _dataPath;
 
         public DocumentRepository(string basePath)
         {
-            _basePath = Path.Combine(basePath, "docs");
-            Directory.CreateDirectory(_basePath);
+            _dataPath = basePath;
+            Directory.CreateDirectory(_dataPath);
         }
 
-        public async Task SaveDocumentAsync(Document document)
+        public async Task SaveDocumentAsync(Document document, string tenantId)
         {
-            var filePath = Path.Combine(_basePath, $"{document.DocId}.json");
+            var docsPath = Path.Combine(_dataPath, tenantId, "docs");
+            Directory.CreateDirectory(docsPath);
+            var filePath = Path.Combine(docsPath, $"{document.DocId}.json");
             var json = JsonSerializer.Serialize(document, new JsonSerializerOptions 
             { 
                 WriteIndented = true 
@@ -24,9 +26,9 @@ namespace RubberSearch.Infrastructure
             await File.WriteAllTextAsync(filePath, json);
         }
 
-        public async Task<Document?> GetDocumentAsync(string docId)
+        public async Task<Document?> GetDocumentAsync(string docId, string tenantId)
         {
-            var filePath = Path.Combine(_basePath, $"{docId}.json");
+            var filePath = Path.Combine(_dataPath, tenantId, "docs", $"{docId}.json");
             if (!File.Exists(filePath))
                 return null;
 

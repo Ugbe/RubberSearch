@@ -3,7 +3,7 @@ namespace RubberSearch.Core.Models
     public class Document
     {
     /// <summary>
-    /// Tenant identifier (reserved for future multi-tenant support).
+    /// Tenant identifier, as resolved from the API Key. Remains here despite the doc already being stored in the appropriately named folder in case of any changes to the structure in the future.
     /// </summary>
         public string TenantId { get; set; } = string.Empty;
     /// <summary>

@@ -10,7 +10,7 @@ namespace UnitTests
     internal class InMemoryDocumentRepository : IDocumentRepository
     {
         public Dictionary<string, Document> Store { get; } = new();
-        public Task<Document?> GetDocumentAsync(string docId) => Task.FromResult(Store.ContainsKey(docId) ? Store[docId] : null);
+        public Task<Document> GetDocumentAsync(string docId) => Task.FromResult(Store.ContainsKey(docId) ? Store[docId] : null);
         public Task SaveDocumentAsync(Document document) { Store[document.DocId] = document; return Task.CompletedTask; }
     }
 
