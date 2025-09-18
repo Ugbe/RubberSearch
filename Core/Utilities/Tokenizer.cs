@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace RubberSearch.Core.Utilities
 {
     public class Tokenizer
@@ -11,13 +13,13 @@ namespace RubberSearch.Core.Utilities
             _maxNGramLength = maxNGramLength;
         }
 
-    /// <summary>
-    /// Tokenizes text into tokens (n-grams) and returns a map of token -> list of token positions (word offsets).
-    /// Positions are word indices (0-based) in the tokenized text.
-    /// </summary>
-    /// <param name="text">Input text to tokenize.</param>
-    /// <returns>Dictionary mapping token to positions where it appears.</returns>
-    public Dictionary<string, List<int>> TokenizeWithPositions(string text)
+        /// <summary>
+        /// Tokenizes text into tokens (n-grams) and returns a map of token -> list of token positions (word offsets).
+        /// Positions are word indices (0-based) in the tokenized text.
+        /// </summary>
+        /// <param name="text">Input text to tokenize.</param>
+        /// <returns>Dictionary mapping token to positions where it appears.</returns>
+        public Dictionary<string, List<int>> TokenizeWithPositions(string text)
         {
             var tokenPositions = new Dictionary<string, List<int>>();
             if (string.IsNullOrWhiteSpace(text))
@@ -29,7 +31,7 @@ namespace RubberSearch.Core.Utilities
                       .Replace("\t", " ");
 
             var words = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            
+
             for (int position = 0; position < words.Length; position++)
             {
                 var word = words[position];
@@ -54,10 +56,18 @@ namespace RubberSearch.Core.Utilities
             return tokenPositions;
         }
 
-    /// <summary>
-    /// Helper to add a position for a token into the tokenPositions map.
-    /// </summary>
-    private void AddTokenPosition(Dictionary<string, List<int>> tokenPositions, string token, int position)
+        ///<summary>
+        /// Tokenizes text using the TokenizeWithPositions method, returns n-grams only, without position info. For the search service.
+        /// </summary>
+        public List<string> Tokenize(string text)
+        {
+            return TokenizeWithPositions(text).Keys.ToList();
+        }
+
+        /// <summary>
+        /// Helper to add a position for a token into the tokenPositions map.
+        /// </summary>
+        private void AddTokenPosition(Dictionary<string, List<int>> tokenPositions, string token, int position)
         {
             if (!tokenPositions.TryGetValue(token, out var positions))
             {
