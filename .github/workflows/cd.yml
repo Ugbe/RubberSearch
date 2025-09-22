@@ -4,6 +4,15 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*.*.*' # e.g. v1.1.2
+
+      # thus git push origin main will deploy only
+      # while the below also releases
+      # git checkout main
+      # git pull
+      # git tag v1.0.0
+      # git push origin v1.0.0
 
 jobs:
   build-and-deploy:
@@ -24,12 +33,36 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Publish
-        run: dotnet publish RubberSearch.Api/RubberSearch.Api.csproj -c Release -o ./publish --no-build
+      - name: Publish portable
+        run: dotnet publish RubberSearch.Api/RubberSearch.Api.csproj -c Release -o ./publish/portable --no-build
+
+      - name: Publish self-contained (Windows x64)
+        run: dotnet publish RubberSearch.Api/RubberSearch.Api.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
+
+      - name: Publish self-contained (Linux x86-64)
+        run: dotnet publish RubberSearch.Api/RubberSearch.Api.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
+
+      - name: Zip artifacts
+        run: |
+          cd publish
+          zip -r ../rubbersearch-portable.zip portable
+          zip -r ../rubbersearch-win-x64.zip win-x64
+          zip -r ../rubbersearch-linux-x64.zip linux-x64
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            rubbersearch-portable.zip
+            rubbersearch-win-x64.zip
+            rubbersearch-linux-x64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: rubbersearch
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: ./publish
+          package: ./publish/portable
