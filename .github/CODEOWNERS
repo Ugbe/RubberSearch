@@ -1,0 +1,5 @@
+# CODEOWNERS
+/.github/ @Ugbe
+/RubberSearch.Api/ @Ugbe
+/Core/ @Ugbe
+/Infrastructure/ @Ugbe

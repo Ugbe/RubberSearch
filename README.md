@@ -2,8 +2,8 @@
 
 ![CI](https://github.com/Ugbe/Rubbersearch/actions/workflows/ci.yml/badge.svg)
 ![CD](https://github.com/Ugbe/Rubbersearch/actions/workflows/cd.yml/badge.svg)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/Ugbe/Rubbersearch)
-![GitHub](https://img.shields.io/github/license/Ugbe/Rubbersearch)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Ugbe/Rubbersearch)?cacheSeconds=10
+![GitHub](https://img.shields.io/github/license/Ugbe/Rubbersearch)?cacheSeconds=10
 ![GitHub issues](https://img.shields.io/github/issues/Ugbe/Rubbersearch)
 
 Rubbersearch is a lightweight search engine and data store optimized for speed and relevance on smaller, development-scale workloads and in testing environments (production-scale coming soon). With Rubbersearch, you can perform near real-time search over large datasets, integrate with web and generative AI applications, and much more.
