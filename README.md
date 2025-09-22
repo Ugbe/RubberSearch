@@ -54,7 +54,7 @@ chmod +x RubberSearch.Api
 ````
 
 You can then access Rubbersearch at:
-`http://localhost:5298`
+`http://localhost:5000`
 
 ## API Access
 
