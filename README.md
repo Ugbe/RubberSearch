@@ -48,7 +48,9 @@ If you prefer to install and manage Rubbersearch yourself, you can download the 
 After downloading and unzipping, run:
 
 ```bash
-dotnet Rubbersearch.Api.dll
+cd /path/to/publish/folder
+chmod +x RubberSearch.Api  
+./RubberSearch.Api --urls "http://0.0.0.0:5000"
 ````
 
 You can then access Rubbersearch at:
