@@ -54,14 +54,13 @@ dotnet Rubbersearch.Api.dll
 You can then access Rubbersearch at:
 `http://localhost:5298`
 
----
 ## API Access
 
 Before indexing or searching, you’ll need an **API key**.
 This is generated via the `RequestKey` endpoint.
 
 Each API key maps to a **tenant**. A tenant has a single index, which could represent an app, a module, or any logical grouping. You can create multiple tenants (and thus multiple indexes) depending on your needs.
----
+
 
 ## Sending Requests to Rubbersearch
 
